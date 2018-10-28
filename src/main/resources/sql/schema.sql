@@ -47,6 +47,7 @@ CREATE TABLE `table_strategy_config` (
   `db_id` int(11) DEFAULT NULL COMMENT '数据库id',
   `table_name` varchar(255) DEFAULT NULL COMMENT '数据库表名',
   `prefix` varchar(255) DEFAULT NULL,
+  `project_path` varchar(255) DEFAULT NULL,
   `model_name` varchar(255) DEFAULT NULL,
   `author` varchar(255) DEFAULT NULL,
   `entity_name` varchar(255) DEFAULT NULL,
@@ -59,9 +60,10 @@ CREATE TABLE `table_strategy_config` (
   `service_package` varchar(255) DEFAULT NULL,
   `service_impl_package` varchar(255) DEFAULT NULL,
   `mapper_package` varchar(255) DEFAULT NULL,
+  `mapper_xml_package` varchar(255) DEFAULT NULL,
   `controller_package` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `table_strategy_config` */
 
