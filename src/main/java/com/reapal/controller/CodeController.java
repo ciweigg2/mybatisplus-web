@@ -215,6 +215,7 @@ public class CodeController extends BaseController{
 		gc.setXmlName(tableStrategyConfig.getXmlName());
 		gc.setServiceName(tableStrategyConfig.getServiceName());
 		gc.setServiceImplName(tableStrategyConfig.getServiceImplName());
+		gc.setOpen(false);//是否生成后打开文件
 		mpg.setGlobalConfig(gc);
 		DataSourceConfig dsc = new DataSourceConfig();
 		dsc.setDbType(dbConfig.getDriver().indexOf("mysql")>-1?DbType.MYSQL:DbType.ORACLE);
