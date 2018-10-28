@@ -19,72 +19,72 @@ public class CodeDaoImpl implements CodeDao {
 	
 	@Override
 	public void saveComment(TableInfo tableInfo, DbConfig dbConfig){
-		Connection conn = getConnection(dbConfig);
-	    try{
-	    	Statement stmt = conn.createStatement();
-	    	String strSql = "";
-
-	    	if(dbConfig.getUrl().indexOf("mysql")>0){
-	    		strSql = "ALTER TABLE "+tableInfo.getTableName()+" COMMENT '"+tableInfo.getComments()+"';";
-	    		stmt.executeUpdate(strSql);
-		    	//stmt.executeUpdate("use information_schema;");
-		    	for(ColumnInfo item : tableInfo.getListColumn()){
-					StringBuilder sb = new StringBuilder();
-					sb.append("ALTER TABLE ");
-					if(StringUtils.isEmpty(tableInfo.getTableName())){
-						continue;
-					}else{
-						sb.append(" "+tableInfo.getTableName()+" ");
-					}
-					sb.append(" MODIFY ");
-					if(StringUtils.isEmpty(item.getColName())){
-						continue;
-					}else{
-						sb.append(" "+item.getColName()+" ");
-					}
-					sb.append(" "+ item.getColType()+" ");
-					if(!item.isNullable()){
-						sb.append(" NOT NULL ");
-					}
-					if(!StringUtils.isEmpty(item.getDefaultValue())){
-						sb.append(" DEFAULT "+item.getDefaultValue()+" ");
-					}
-					if(!StringUtils.isEmpty(item.getExtra())){
-						sb.append(" " + item.getExtra() + " ");
-					}
-					if(!StringUtils.isEmpty(item.getComments())){
-						sb.append(" COMMENT '" + item.getComments() + "' ;");
-					}
-					log.info("update mysql column, sql is : {}",sb.toString());
-		    		stmt.executeUpdate(sb.toString());
-		    	}
-	    	} else{
-	    		strSql = "COMMENT ON TABLE "+tableInfo.getTableName()+" IS '#"+tableInfo.getComments()+"'";
-	    		stmt.executeUpdate(strSql);
-		    	for(ColumnInfo item : tableInfo.getListColumn()){
-		    		strSql = "COMMENT ON COLUMN "+tableInfo.getTableName()+"."+item.getColName()+" IS '"+item.getComments()+"'";
-		    		stmt.executeUpdate(strSql); 
-		    	}
-	    	}
-	    	if(stmt != null){   // 关闭声明    
-		        try{    
-		            stmt.close() ;    
-		        }catch(SQLException e){    
-		            e.printStackTrace() ;    
-		        }
-	    	}
-	    }
-	    catch(SQLException e)
-	    {
-	      throw new RuntimeException("execute sql occer error", e);
-	    } 
-	    finally{
-	      try{   
-	        conn.close();
-	      }catch (Exception e) {
-	        throw new RuntimeException(e); 
-	      } 
-	    }
+//		Connection conn = getConnection(dbConfig);
+//	    try{
+//	    	Statement stmt = conn.createStatement();
+//	    	String strSql = "";
+//
+//	    	if(dbConfig.getUrl().indexOf("mysql")>0){
+////	    		strSql = "ALTER TABLE "+tableInfo.getTableName()+" COMMENT '"+tableInfo.getComments()+"';";
+////	    		stmt.executeUpdate(strSql);
+//		    	//stmt.executeUpdate("use information_schema;");
+//		    	for(ColumnInfo item : tableInfo.getListColumn()){
+//					StringBuilder sb = new StringBuilder();
+//					sb.append("ALTER TABLE ");
+//					if(StringUtils.isEmpty(tableInfo.getTableName())){
+//						continue;
+//					}else{
+//						sb.append(" "+tableInfo.getTableName()+" ");
+//					}
+//					sb.append(" MODIFY ");
+//					if(StringUtils.isEmpty(item.getColName())){
+//						continue;
+//					}else{
+//						sb.append(" "+item.getColName()+" ");
+//					}
+//					sb.append(" "+ item.getColType()+" ");
+////					if(!item.isNullable()){
+////						sb.append(" NOT NULL ");
+////					}
+//					if(!StringUtils.isEmpty(item.getDefaultValue())){
+//						sb.append(" DEFAULT "+item.getDefaultValue()+" ");
+//					}
+//					if(!StringUtils.isEmpty(item.getExtra())){
+//						sb.append(" " + item.getExtra() + " ");
+//					}
+//					if(!StringUtils.isEmpty(item.getComments())){
+//						sb.append(" COMMENT '" + item.getComments() + "' ;");
+//					}
+//					log.info("update mysql column, sql is : {}",sb.toString());
+//		    		stmt.executeUpdate(sb.toString());
+//		    	}
+//	    	} else{
+//	    		strSql = "COMMENT ON TABLE "+tableInfo.getTableName()+" IS '#"+tableInfo.getComments()+"'";
+//	    		stmt.executeUpdate(strSql);
+//		    	for(ColumnInfo item : tableInfo.getListColumn()){
+//		    		strSql = "COMMENT ON COLUMN "+tableInfo.getTableName()+"."+item.getColName()+" IS '"+item.getComments()+"'";
+//		    		stmt.executeUpdate(strSql);
+//		    	}
+//	    	}
+//	    	if(stmt != null){   // 关闭声明
+//		        try{
+//		            stmt.close() ;
+//		        }catch(SQLException e){
+//		            e.printStackTrace() ;
+//		        }
+//	    	}
+//	    }
+//	    catch(SQLException e)
+//	    {
+//	      throw new RuntimeException("execute sql occer error", e);
+//	    }
+//	    finally{
+//	      try{
+//	        conn.close();
+//	      }catch (Exception e) {
+//	        throw new RuntimeException(e);
+//	      }
+//	    }
 	};
 
 	@Override
