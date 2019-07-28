@@ -2,9 +2,11 @@ package com.reapal.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.po.TableFill;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.reapal.dao.DbConfigDao;
 import com.reapal.dao.TableStrategyConfigDao;
@@ -224,8 +226,10 @@ public class CodeController extends BaseController{
 		dsc.setPassword(dbConfig.getPassword());
 		dsc.setUrl(dbConfig.getUrl());
 		mpg.setDataSource(dsc);
+
 		// 策略配置
 		StrategyConfig strategy = new StrategyConfig();
+		// strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
 		if(!StringUtils.isEmpty(tableStrategyConfig.getPrefix())) {
             strategy.setTablePrefix(tableStrategyConfig.getPrefix());
 		}
@@ -253,37 +257,49 @@ public class CodeController extends BaseController{
 		mpg.setStrategy(strategy);
 		// 包配置
 		PackageConfig pc = new PackageConfig();
-		pc.setParent("src.main");
-		pc.setModuleName(tableStrategyConfig.getModelName());
-		pc.setEntity("java."+tableStrategyConfig.getEntityPackage());
-		pc.setService("java."+tableStrategyConfig.getServicePackage());
-		pc.setServiceImpl("java."+tableStrategyConfig.getServiceImplPackage());
-		pc.setMapper("java."+tableStrategyConfig.getMapperPackage());
+//		pc.setParent("src.main");
+//		pc.setModuleName(tableStrategyConfig.getModelName());
+//		pc.setEntity("java."+tableStrategyConfig.getEntityPackage());
+//		pc.setService("java."+tableStrategyConfig.getServicePackage());
+//		pc.setServiceImpl("java."+tableStrategyConfig.getServiceImplPackage());
+//		pc.setMapper("java."+tableStrategyConfig.getMapperPackage());
+//		pc.setXml("resources."+tableStrategyConfig.getMapperXmlPackage());
+//		pc.setController("java."+tableStrategyConfig.getControllerPackage());
+
+		pc.setParent(tableStrategyConfig.getModelName());
+		pc.setModuleName(null);
+		pc.setEntity(tableStrategyConfig.getEntityPackage());
+		pc.setService(tableStrategyConfig.getServicePackage());
+		pc.setServiceImpl(tableStrategyConfig.getServiceImplPackage());
+		pc.setMapper(tableStrategyConfig.getMapperPackage());
+		//xml代替vo路径
 		pc.setXml("resources."+tableStrategyConfig.getMapperXmlPackage());
-		pc.setController("java."+tableStrategyConfig.getControllerPackage());
+		pc.setController(tableStrategyConfig.getControllerPackage());
 
 		mpg.setPackageInfo(pc);
-		// 注入自定义配置，可以在 VM 中使用 cfg.abc 设置的值
-		InjectionConfig cfg = new InjectionConfig() {
-			@Override
-			public void initMap() {
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("abc", this.getConfig().getGlobalConfig().getAuthor() + "-mp");
-				map.put("entityLombokModel",true);
-				map.put("restControllerStyle",true);
-				this.setMap(map);
-			}
-		};
-		mpg.setCfg(cfg);
+		// 注入自定义配置，可以在 VM 中使用 cfg.abc 设置的值 这边可以自定义注入一些值
+//		InjectionConfig cfg = new InjectionConfig() {
+//			@Override
+//			public void initMap() {
+//				Map<String, Object> map = new HashMap<String, Object>();
+//				map.put("abc", this.getConfig().getGlobalConfig().getAuthor() + "-mp");
+//				map.put("entityLombokModel",true);
+//				map.put("restControllerStyle",true);
+//				this.setMap(map);
+//			}
+//		};
+		mpg.setCfg(customerConfig(tableStrategyConfig));
 		// 自定义模板配置，可以 copy 源码 mybatis-plus/src/main/resources/template 下面内容修改，
 		// 放置自己项目的 src/main/resources/template 目录下, 默认名称一下可以不配置，也可以自定义模板名称
 		 TemplateConfig tc = new TemplateConfig();
-		 tc.setController("/templates/gen-template/controller.java.vm");
-		 tc.setEntity("/templates/gen-template/entity.java.vm");
-		 tc.setMapper("/templates/gen-template/mapper.java.vm");
-		 tc.setXml("/templates/gen-template/mapper.xml.vm");
-		 tc.setService("/templates/gen-template/service.java.vm");
-		 tc.setServiceImpl("/templates/gen-template/serviceImpl.java.vm");
+		 tc.setController("/templates/sdzb-template/controller.java.vm");
+		 //不生成的设置null
+		 tc.setMapper(null);
+		 tc.setXml(null);
+		 tc.setService("/templates/sdzb-template/service.java.vm");
+		 tc.setServiceImpl("/templates/sdzb-template/serviceImpl.java.vm");
+		 //vo模板
+		 tc.setEntity(null);
 		 mpg.setTemplate(tc);
 		// 执行生成
 		mpg.execute();
@@ -312,7 +328,35 @@ public class CodeController extends BaseController{
 //			e.printStackTrace();
 //		}
 
-		return null;
+		return "/views/ciwei/index";
+	}
+
+	/**
+	 * 自定义生成文件 生成dto vo这些东西呀
+	 */
+	private static InjectionConfig customerConfig(TableStrategyConfig tableStrategyConfig) {
+		InjectionConfig config = new InjectionConfig() {
+			@Override
+			public void initMap() {
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("abc", this.getConfig().getGlobalConfig().getAuthor() + "-mp");
+				map.put("entityLombokModel",true);
+				map.put("restControllerStyle",true);
+				this.setMap(map);
+			}
+		};
+
+		List<FileOutConfig> files = new ArrayList<FileOutConfig>();
+		files.add(new FileOutConfig("/templates/sdzb-template/entityvo.java.vm") {
+			@Override
+			public String outputFile(com.baomidou.mybatisplus.generator.config.po.TableInfo tableInfo) {
+				String expand = tableStrategyConfig.getProjectPath() + File.separator + tableStrategyConfig.getModelName().replace("." ,File.separator) + File.separator + tableStrategyConfig.getEntityPackage() + File.separator + "vo";
+				String entityFile = String.format((expand + File.separator + "%s" + ".java"), tableInfo.getEntityName() + "Vo");
+				return entityFile;
+			}
+		});
+		config.setFileOutConfigList(files);
+		return config;
 	}
 
 }

@@ -1,0 +1,20 @@
+package ${package.Entity}.vo;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import ${package.Entity}.${entity};
+
+import java.io.Serializable;
+
+/**
+ * @author ${author}
+ * @date ${date}
+ * @jdk.version 1.8
+ * @desc ${table.comment}vo
+ */
+@ApiModel(value = "${table.comment}vo")
+@Data
+public class ${entity}Vo extends ${entity} implements Serializable {
+
+}

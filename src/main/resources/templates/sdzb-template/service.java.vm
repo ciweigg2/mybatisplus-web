@@ -1,0 +1,77 @@
+package ${package.Service};
+
+import com.easy521.base.service.BaseService;
+import ${package.Entity}.${entity};
+import ${package.Entity}.${entity}Example;
+import ${package.Entity}.vo.${entity}Vo;
+
+import java.util.List;
+
+/**
+ * @author ${author}
+ * @date ${date}
+ * @jdk.version 1.8
+ * @desc ${table.comment}接口
+ */
+public interface ${entity}Service extends BaseService<${entity}, ${entity}Example,String> {
+
+    #set($lowrEntity = $table.entityName.substring(0,1).toLowerCase() + $table.entityName.substring(1,$table.entityName.length()))
+
+    /**
+     * 根据条件查询${table.comment}的列表
+     *
+     * @param ${lowrEntity} 条件参数
+     * @return ${table.comment}列表
+     *
+     */
+    List<${entity}Vo> selectList(${entity} ${lowrEntity});
+
+    /**
+     * 新增${table.comment}列表
+     *
+     * @param ${lowrEntity}List ${table.comment}列表
+     * @return 新增的${table.comment}列表
+     */
+    List<${entity}> addList(List<${entity}> ${lowrEntity}List);
+
+    /**
+     * 新增${table.comment}
+     *
+     * @param ${lowrEntity} ${table.comment}
+     * @return 新增的${table.comment}
+     */
+    ${entity} add(${entity} ${lowrEntity});
+
+    /**
+     * 根据主键修改${table.comment}列表
+     *
+     * @param ${lowrEntity}List ${table.comment}列表
+     * @return 修改后的${table.comment}列表
+     */
+    List<${entity}> updateList(List<${entity}> ${lowrEntity}List) ;
+
+    /**
+     * 根据主键修改${table.comment}
+     *
+     * @param ${lowrEntity} ${table.comment}
+     * @return 修改后的${table.comment}
+     */
+    ${entity} update(${entity} ${lowrEntity}) ;
+
+    /**
+     * 根据主键删除${table.comment}
+     *
+     * @param ${lowrEntity} ${table.comment}
+     * @return 影响条数
+     */
+    int delete(${entity} ${lowrEntity});
+
+    /**
+     * 删除${table.comment}列表
+     *
+     * @param ${lowrEntity}List ${table.comment}列表
+     * @return 删除成功
+     */
+    int deleteList(List<${entity}> ${lowrEntity}List);
+
+}

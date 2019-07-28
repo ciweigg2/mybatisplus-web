@@ -352,7 +352,8 @@ $UU.init({
                 type: 'warning'
             }).then(function () {
                 //请求参数
-                window.open($UC.ctxPath+"/generate?tableName="+_this.data_group.tableName+"&id="+_this.data_group.id);
+                // window.open($UC.ctxPath+"/generate?tableName="+_this.data_group.tableName+"&id="+_this.data_group.id);
+                window.location.href=$UC.ctxPath+"/generate?tableName="+_this.data_group.tableName+"&id="+_this.data_group.id;
             }).catch(function () {
             });
             // window.location.href=$UC.ctxPath+"/generate?tableName="+_this.data_group.tableName+"&dbName="+_this.data_group.dbName;

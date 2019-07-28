@@ -1,0 +1,176 @@
+package ${package.Controller};
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import ${package.Entity}.${entity};
+import ${package.Service}.${table.serviceName};
+import net.transino.commonbiz.annotation.SystemControllerLog;
+import ${package.Entity}.vo.${entity}Vo;
+import net.transino.utils.view.ResponseView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
+
+/**
+ * @author ${author}
+ * @date ${date}
+ * @jdk.version 1.8
+ * @desc ${table.comment}接口
+ */
+@Api(tags = "${table.comment}" ,description = "${table.comment}")
+@RestController
+@RequestMapping("/${table.entityPath}")
+public class ${entity}Controller {
+
+    private static final Logger logger = LoggerFactory.getLogger(${entity}Controller.class);
+
+    #set($lowerCaseServiceName = $table.serviceName.substring(0,1).toLowerCase() + $table.serviceName.substring(1,$table.serviceName.length()))
+
+    @Autowired
+    private ${table.serviceName} ${lowerCaseServiceName};
+
+    #set($lowrEntity = $table.entityName.substring(0,1).toLowerCase() + $table.entityName.substring(1,$table.entityName.length()))
+
+    /**
+     * 新增${table.comment}信息列表
+     *
+     * @param ${lowrEntity}List ${table.comment}列表
+     * @return 添加的${table.comment}列表
+     *
+     */
+    @PostMapping(value = "addList")
+    @SystemControllerLog(
+            description = "新增${table.comment}列表记录",
+            action = "新增${table.comment}列表记录",
+            apiGroupType = "",
+            tableNames = "${table.comment}"
+    )
+    @ApiOperation(value = "新增${table.comment}信息列表")
+    public ResponseView<${entity}> addList(@RequestBody List<${entity}> ${lowrEntity}List){
+            ${lowrEntity}Service.addList(${lowrEntity}List);
+            return ResponseView.success(${lowrEntity}List);
+            }
+
+    /**
+     * 新增${table.comment}信息
+     *
+     * @param ${lowrEntity} ${table.comment}
+     * @return 添加的${table.comment}
+     *
+     */
+    @PostMapping(value = "add")
+    @SystemControllerLog(
+            description = "新增${table.comment}记录",
+            action = "新增${table.comment}记录",
+            apiGroupType = "",
+            tableNames = "${table.comment}"
+    )
+    @ApiOperation(value = "新增${table.comment}信息")
+    public ResponseView<${entity}> add(@RequestBody ${entity} ${lowrEntity}){
+            ${lowrEntity}Service.add(${lowrEntity});
+            return ResponseView.success(${lowrEntity});
+            }
+
+    /**
+     * 删除${table.comment}
+     *
+     * @param ${lowrEntity} 需要删除的${table.comment}
+     * @return 删除成功
+     */
+    @PostMapping(value = "delete")
+    @SystemControllerLog(
+            description = "根据主键删除${table.comment}记录",
+            action = "删除${table.comment}记录",
+            apiGroupType = "",
+            tableNames = "${table.comment}"
+    )
+    @ApiOperation(value = "删除${table.comment}")
+    public ResponseView<Integer> delete(@RequestBody ${entity} ${lowrEntity}){
+            ${lowrEntity}Service.delete(${lowrEntity});
+            return ResponseView.success("删除成功");
+            }
+
+    /**
+     * 删除${table.comment}列表
+     *
+     * @param ${lowrEntity}List 需要删除的${table.comment}列表
+     * @return 删除成功
+     */
+    @PostMapping(value = "deleteList")
+    @SystemControllerLog(
+            description = "根据主键删除${table.comment}列表",
+            action = "删除${table.comment}列表",
+            apiGroupType = "",
+            tableNames = "${table.comment}"
+    )
+    @ApiOperation(value = "删除${table.comment}列表")
+    public ResponseView<Integer> delete(@RequestBody List<${entity}> ${lowrEntity}List){
+            ${lowrEntity}Service.deleteList(${lowrEntity}List);
+            return ResponseView.success("删除成功");
+            }
+
+    /**
+     * 修改${table.comment}信息列表
+     *
+     * @param ${lowrEntity}List 需要修改的${table.comment}列表
+     * @return 修改后的${table.comment}列表
+     *
+     */
+    @PostMapping(value = "updateList")
+    @SystemControllerLog(
+            description = "根据主键修改${table.comment}列表记录",
+            action = "更新${table.comment}列表记录",
+            apiGroupType = "",
+            tableNames = "${table.comment}"
+    )
+    @ApiOperation(value = "修改${table.comment}信息列表")
+    public ResponseView<${entity}> updateList(@RequestBody List<${entity}> ${lowrEntity}List) {
+            ${lowrEntity}Service.updateList(${lowrEntity}List);
+            return ResponseView.success(${lowrEntity}List);
+            }
+
+    /**
+     * 修改${table.comment}信息
+     *
+     * @param ${lowrEntity} 需要修改的${table.comment}
+     * @return 修改后的${table.comment}
+     *
+     */
+    @PostMapping(value = "update")
+    @SystemControllerLog(
+            description = "根据主键修改${table.comment}记录",
+            action = "更新${table.comment}记录",
+            apiGroupType = "",
+            tableNames = "${table.comment}"
+    )
+    @ApiOperation(value = "修改${table.comment}信息")
+    public ResponseView<${entity}> update(@RequestBody ${entity} ${lowrEntity}) {
+            ${lowrEntity}Service.update(${lowrEntity});
+            return ResponseView.success(${lowrEntity});
+            }
+
+    /**
+     *根据选择条件查询${table.comment}列表
+     *
+     * @param ${lowrEntity} 条件信息
+     * @return 查询结果
+     *
+     */
+    @PostMapping(value = "selectList")
+    @SystemControllerLog(
+            description = "根据选择条件查询${table.comment}列表",
+            action = "根据选择条件查询${table.comment}列表",
+            apiGroupType = "",
+            tableNames = "${table.comment}"
+    )
+    @ApiOperation(value = "根据选择条件查询${table.comment}列表")
+    public ResponseView<${entity}Vo> selectList(@RequestBody ${entity} ${lowrEntity}){
+        return ResponseView.success(${lowrEntity}Service.selectList(${lowrEntity}));
+    }
+
+}
