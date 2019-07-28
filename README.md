@@ -1,6 +1,8 @@
 ### mybatisplus-generator-web
 基于mybatisplus的web代码生成工具
 
+TemplateConfig tc = new TemplateConfig();这个方法下面设置模板具体使用哪些
+
 ### 项目特色
 - 该项目运行无需任何数据库链接
 - 数据源配置记录在属性文件中，项目重启也不会丢失
