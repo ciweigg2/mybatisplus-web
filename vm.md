@@ -1,3 +1,4 @@
+```
 ${author} 作者
 ${date} 日期
 
@@ -25,3 +26,4 @@ ${package.Mapper}.${table.mapperName} Mapper使用的路径
 imports
 ${package.Entity}.${entity} 引用的对象路径
 ${package.Service}.${table.serviceName} 引用的service路径
+```
